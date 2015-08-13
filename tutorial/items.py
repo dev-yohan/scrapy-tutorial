@@ -18,6 +18,7 @@ class OperaSportsMatchItem(Item):
 	score = Field()
 	hour = Field()
 	season = Field()
+	date = Field()
 
 
 #class TutorialItem(scrapy.Item):

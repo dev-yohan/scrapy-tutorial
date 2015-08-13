@@ -20,6 +20,7 @@ class OperaSportsSpider(Spider):
             away_team = match.xpath('td[contains(@class,"team team-b ")]//a/@title').extract()
             score = match.xpath('td[contains(@class,"score-time score")]//a/text()').extract()
             hour = match.xpath('td[contains(@class,"score-time status")]//span/text()').extract()
+            date = match.xpath('td[contains(@class,"date no-repetition")]/text()').extract()
 
             if not score:
                 score = ""
@@ -41,6 +42,7 @@ class OperaSportsSpider(Spider):
                 item['hour'] = hour
                 item['score'] = score
                 item['season'] = season
+                item['date'] = date
                 items.append(item)
 
         return items
