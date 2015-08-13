@@ -18,7 +18,8 @@ class OperaSportsSpider(Spider):
              
             home_team = match.xpath('td[contains(@class,"team team-a ")]//a/@title').extract()
             away_team = match.xpath('td[contains(@class,"team team-b ")]//a/@title').extract()
-            middle_result = match.xpath('td[contains(@class,"score-time score")]//a/text()').extract()
+            score = match.xpath('td[contains(@class,"score-time score")]//a/text()').extract().strip()
+            hour = match.xpath('td[contains(@class,"score-time status")]//a/text()').extract().strip()
 
             season = sel.xpath('//div[contains(@id,"block_competition_nav_375888a5768887cc1e3df4571a8a147f")]//option[contains(@selected,"selected")]/text()').extract()
 
@@ -26,8 +27,8 @@ class OperaSportsSpider(Spider):
                 item = OperaSportsMatchItem()
                 item['home_team'] = home_team
                 item['away_team'] = away_team
-                item['hour'] = middle_result
-                item['score'] = middle_result
+                item['hour'] = hour
+                item['score'] = score
                 item['season'] = season
                 items.append(item)
 
