@@ -15,6 +15,8 @@ class DmozItem(Item):
 class OperaSportsMatchItem(Item):
 	home_team = Field()
 	away_team = Field()
+	score = Field()
+	hour = Field()
 	season = Field()
 
 
