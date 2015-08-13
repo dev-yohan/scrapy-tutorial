@@ -16,7 +16,7 @@ class OperaSportsSpider(Spider):
         items = []
         for match in matches:
             item = OperaSportsMatchItem()
-            item['home_team'] = site.xpath('td[contains(@class,"team team-a ")]//a/@title').extract()
-            item['away_team'] = site.xpath('td[contains(@class,"team team-b ")]//a/@title').extract()
+            item['home_team'] = match.xpath('td[contains(@class,"team team-a ")]//a/@title').extract()
+            item['away_team'] = match.xpath('td[contains(@class,"team team-b ")]//a/@title').extract()
             items.append(item)
         return items
