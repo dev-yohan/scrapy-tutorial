@@ -12,7 +12,7 @@ class DmozItem(Item):
     link = Field()
     desc = Field()
 
-class OperaSportsMatchItem(Item)
+class OperaSportsMatchItem(Item):
 	home_team = Field()
 	away_team = Field()
 
