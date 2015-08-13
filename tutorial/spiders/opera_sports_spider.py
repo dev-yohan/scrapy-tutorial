@@ -15,8 +15,14 @@ class OperaSportsSpider(Spider):
         matches = sel.xpath('//div[contains(@id,"block_competition_matches_304a33487b604ee39ff8538c139dc0a0")]//tr')
         items = []
         for match in matches:
-            item = OperaSportsMatchItem()
-            item['home_team'] = match.xpath('td[contains(@class,"team team-a ")]//a/@title').extract()
-            item['away_team'] = match.xpath('td[contains(@class,"team team-b ")]//a/@title').extract()
-            items.append(item)
+             
+            home_team = match.xpath('td[contains(@class,"team team-a ")]//a/@title').extract()
+            away_team = match.xpath('td[contains(@class,"team team-b ")]//a/@title').extract()
+
+            if  home_team and away_team:
+                item = OperaSportsMatchItem()
+                item['home_team'] = home_team
+                item['away_team'] = away_team
+                items.append(item)
+
         return items
