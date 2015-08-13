@@ -18,8 +18,8 @@ class OperaSportsSpider(Spider):
              
             home_team = match.xpath('td[contains(@class,"team team-a ")]//a/@title').extract()
             away_team = match.xpath('td[contains(@class,"team team-b ")]//a/@title').extract()
-            score = join(match.xpath('td[contains(@class,"score-time score")]//a/text()').extract()).strip()
-            hour = join(match.xpath('td[contains(@class,"score-time status")]//a/text()').extract()).strip()
+            score = match.xpath('td[contains(@class,"score-time score")]//a/text()').extract()[0].strip()
+            hour = match.xpath('td[contains(@class,"score-time status")]//a/text()').extract()[0].strip()
 
             season = sel.xpath('//div[contains(@id,"block_competition_nav_375888a5768887cc1e3df4571a8a147f")]//option[contains(@selected,"selected")]/text()').extract()
 
