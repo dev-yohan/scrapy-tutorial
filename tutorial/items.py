@@ -15,6 +15,7 @@ class DmozItem(Item):
 class OperaSportsMatchItem(Item):
 	home_team = Field()
 	away_team = Field()
+	season = Field()
 
 
 #class TutorialItem(scrapy.Item):
