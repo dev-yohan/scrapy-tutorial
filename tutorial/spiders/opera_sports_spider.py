@@ -15,7 +15,7 @@ class OperaSportsSpider(Spider):
         matches = sel.xpath('//div[contains(@id,"block_competition_matches_304a33487b604ee39ff8538c139dc0a0")]//tr')
         items = []
         for match in matches:
-            item = DmozItem()
+            item = OperaSportsMatchItem()
             item['home_team'] = site.xpath('//td[contains(@class,"team team-a ")]//a/@title').extract()
             item['away_team'] = site.xpath('//td[contains(@class,"team team-b ")]//a/@title').extract()
             items.append(item)
