@@ -7,6 +7,7 @@
 
 import json
 import pymongo
+from scrapy import log
 
 class JsonWriterPipeline(object):
 
@@ -29,8 +30,8 @@ class MongoPipeline(object):
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            mongo_uri=crawler.settings.get('127.0.0.1:27017'),
-            mongo_db=crawler.settings.get('matches', 'items')
+            mongo_uri='mongodb://localhost:27017'
+            mongo_db='matches'
         )
 
     def open_spider(self, spider):
@@ -41,7 +42,9 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
+
         self.db[self.collection_name].insert(dict(item))
+        log.msg("Question added to MongoDB database!", level=log.DEBUG, spider=spider)
         return item
 
 
