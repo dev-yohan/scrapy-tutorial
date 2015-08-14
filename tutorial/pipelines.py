@@ -30,7 +30,7 @@ class MongoPipeline(object):
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            mongo_uri='mongodb://localhost:27017'
+            mongo_uri='mongodb://localhost:27017',
             mongo_db='spiders'
         )
 
