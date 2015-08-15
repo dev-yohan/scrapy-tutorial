@@ -1,18 +1,22 @@
 from scrapy.spiders import Spider
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import Selector
 from tutorial.items import OperaSportsMatchItem
-
+from scrapy import Request
 
 class OperaSportsSpider(Spider):
     name = "opera_sports"
     allowed_domains = ["sports.opera.com"]
+   
     start_urls = [
-        "http://sports.opera.com/?sport=soccer&page=competition&id=8&p=0&localization_id=www",
+       "http://sports.opera.com/?sport=soccer&page=competition&id=8&p=-2&localization_id=www",
     ]
+
 
     def parse(self, response):
         sel = Selector(response)
-        matches = sel.xpath('//div[contains(@id,"block_competition_matches_304a33487b604ee39ff8538c139dc0a0")]//tr')
+        matches = sel.xpath('//div[contains(@id,"block_competition_matches")]//tr')
         items = []
         for match in matches:
              
@@ -33,7 +37,7 @@ class OperaSportsSpider(Spider):
                 hour = hour[0].strip();    
                     
 
-            season = sel.xpath('//div[contains(@id,"block_competition_nav_375888a5768887cc1e3df4571a8a147f")]//option[contains(@selected,"selected")]/text()').extract()
+            season = sel.xpath('//div[contains(@id,"block_competition_nav_")]//option[contains(@selected,"selected")]/text()').extract()
 
             if  home_team and away_team:
                 item = OperaSportsMatchItem()
@@ -43,6 +47,14 @@ class OperaSportsSpider(Spider):
                 item['score'] = score
                 item['season'] = season
                 item['date'] = date
-                items.append(item)
+                yield item
+              
+        next_page = sel.xpath('//div[contains(@id,"block_competition_matches_")]//span[contains(@class,"nav_description")]//a[contains(@class,"next")]/text()').extract()
 
-        return items
+        if not "disabled" in next_page:
+            #url = response.urljoin(next_page[0].extract())
+            url = response.urljoin(sel.xpath('//div[contains(@id,"block_competition_matches_")]//span[contains(@class,"nav_description")]//a[contains(@class,"next")]/@href').extract()[0])
+            #log.msg("next page", level=log.DEBUG, spider=spider)
+            #log.msg(url, level=log.DEBUG, spider=spider)
+            yield Request(url, self.parse)      
+        
