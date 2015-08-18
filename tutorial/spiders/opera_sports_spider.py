@@ -11,6 +11,9 @@ class OperaSportsSpider(Spider):
    
     start_urls = [
        "http://sports.opera.com/?sport=soccer&page=competition&id=8&p=-2&localization_id=www",
+       "http://sports.opera.com/?sport=soccer&page=competition&id=91&p=-6&localization_id=www",
+       "http://sports.opera.com/?sport=soccer&page=competition&id=33&p=-24&localization_id=www"
+
     ]
 
 
@@ -52,9 +55,6 @@ class OperaSportsSpider(Spider):
         next_page = sel.xpath('//div[contains(@id,"block_competition_matches_")]//span[contains(@class,"nav_description")]//a[contains(@class,"next")]/text()').extract()
 
         if not "disabled" in next_page:
-            #url = response.urljoin(next_page[0].extract())
             url = response.urljoin(sel.xpath('//div[contains(@id,"block_competition_matches_")]//span[contains(@class,"nav_description")]//a[contains(@class,"next")]/@href').extract()[0])
-            #log.msg("next page", level=log.DEBUG, spider=spider)
-            #log.msg(url, level=log.DEBUG, spider=spider)
             yield Request(url, self.parse)      
         
