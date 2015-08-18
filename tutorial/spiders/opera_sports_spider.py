@@ -25,9 +25,9 @@ class OperaSportsSpider(Spider):
              
             home_team = ''.join(match.xpath('td[contains(@class,"team team-a ")]//a/@title').extract())
             away_team = ''.join(match.xpath('td[contains(@class,"team team-b ")]//a/@title').extract())
-            score = ''.join(match.xpath('td[contains(@class,"score-time score")]//a/text()').extract())
+            score = match.xpath('td[contains(@class,"score-time score")]//a/text()').extract()
             hour = match.xpath('td[contains(@class,"score-time status")]//span/text()').extract()
-            date = match.xpath('td[contains(@class,"date no-repetition")]/text()').extract()
+            date = ''.join(match.xpath('td[contains(@class,"date no-repetition")]/text()').extract())
 
             if not score:
                 score = ""
