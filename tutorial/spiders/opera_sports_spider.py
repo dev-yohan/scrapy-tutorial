@@ -23,21 +23,21 @@ class OperaSportsSpider(Spider):
         items = []
         for match in matches:
              
-            home_team = match.xpath('td[contains(@class,"team team-a ")]//a/@title').extract()[0]
-            away_team = match.xpath('td[contains(@class,"team team-b ")]//a/@title').extract()[0]
-            score = match.xpath('td[contains(@class,"score-time score")]//a/text()').extract()[0]
-            hour = match.xpath('td[contains(@class,"score-time status")]//span/text()').extract()[0]
-            date = match.xpath('td[contains(@class,"date no-repetition")]/text()').extract()[0]
+            home_team = ''.join(match.xpath('td[contains(@class,"team team-a ")]//a/@title').extract())
+            away_team = ''.join(match.xpath('td[contains(@class,"team team-b ")]//a/@title').extract())
+            score = match.xpath('td[contains(@class,"score-time score")]//a/text()').extract()
+            hour = match.xpath('td[contains(@class,"score-time status")]//span/text()').extract()
+            date = ''.join(match.xpath('td[contains(@class,"date no-repetition")]/text()').extract())
 
             if not score:
                 score = ""
             else:   
-                score = score.strip();
+                score = ''.join(score[0].strip());
 
             if not hour:
                 hour = ""
             else:   
-                hour = hour.strip();    
+                hour = ''.join(hour[0].strip());    
                     
 
             season = ''.join(sel.xpath('//div[contains(@id,"block_competition_nav_")]//option[contains(@selected,"selected")]/text()').extract())
